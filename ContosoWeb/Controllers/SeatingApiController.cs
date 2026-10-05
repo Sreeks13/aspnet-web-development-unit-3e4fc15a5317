@@ -5,7 +5,9 @@ namespace ContosoWeb.Controllers;
 public class WeddingGuest
 {
     public int Id { get; set; }
+
     public string Name { get; set; } = "";
+
     public int TableNumber { get; set; }
 }
 
@@ -27,7 +29,9 @@ public class SeatingApiController : ControllerBase
     public IActionResult Create(WeddingGuest guest)
     {
         if (string.IsNullOrWhiteSpace(guest.Name))
+        {
             return BadRequest();
+        }
 
         guest.Id = Guests.Count == 0
             ? 1
@@ -44,10 +48,14 @@ public class SeatingApiController : ControllerBase
         var existing = Guests.FirstOrDefault(x => x.Id == id);
 
         if (existing == null)
+        {
             return NotFound();
+        }
 
         if (string.IsNullOrWhiteSpace(guest.Name))
+        {
             return BadRequest();
+        }
 
         existing.Name = guest.Name;
         existing.TableNumber = guest.TableNumber;
